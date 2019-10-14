@@ -1,0 +1,40 @@
+body{
+    background: white;
+    padding: 50px;
+}
+
+div#crypto-container{
+    background: white;
+    width: 100%;
+    margin: 0 auto 3px auto;
+    padding: 1em;
+    box-shadow: 1px 1px 0 lightgrey;
+   
+    
+}
+
+div#news-container{
+  position: left;
+  background: white;
+  width: 100%;
+  height: 100px;
+  margin: 0 auto 4px auto;
+  padding: 1em;
+  box-shadow: 1px 1px 0 lightgrey;
+ 
+  
+}
+
+
+span.left{
+    font-weight: bold;
+    float: left
+  }
+
+  span.center{
+    position: center
+  }
+  
+span.right{
+    float: right
+  }
