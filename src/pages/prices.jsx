@@ -168,10 +168,10 @@ onclick=(e)=>{
     type: 'ADD_Favourite',
     text: e.target.id
     })
-    // store.dispatch({
-    // type: 'REMOVE_unFavourite',
-    // text: e.target.id
-    // })
+    store.dispatch({
+    type: 'REMOVE_unFavourite',
+    text: e.target.id
+    })
     const unF_local=localStorage.getItem('unfavourite').split(',')
     var unF_str= '<ul>'
     unF_local.forEach(function(uns) {
