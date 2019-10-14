@@ -10,7 +10,7 @@ Prices.jsx :
 Uncomment this line of code to view the graph, however the graph is having the following error:
 TypeError: Cannot read property 'length' of undefined
 
-Refreshing the page serveral times will able to get the graph. I belived it was due to synchronizing error. Still in the procss of solving this.
+Refreshing the page serveral times will able to get the graph. I belived it was due to synchronizing error. Still in the process of solving this.
 
 
 ![Graph](/graph.png)
