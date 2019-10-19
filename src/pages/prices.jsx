@@ -96,8 +96,6 @@ class PricePage extends Component{
           text: keys[i]
         })
       }    
-      
-      
       const unF_local=localStorage.getItem('unfavourite').split(',')
       var unF_str= '<ul>'
       unF_local.forEach(function(uns) {
@@ -151,10 +149,15 @@ class PricePage extends Component{
       var utcString = date.toUTCString().slice(5,16); 
       todayTime.push(utcString)
     }
+    localStorage.setItem('todayDataHigh',todayDataHigh)
+    localStorage.setItem('todayDataLow',todayDataLow)
+    localStorage.setItem('todayTime',todayTime)
     this.setState({today:today, todayDataLow : todayDataLow, todayDataHigh: todayDataHigh, todayTime: todayTime})
   }
 })
 }
+
+
 componentWillUnmount(){
   this._isMounted = false;
 }
@@ -217,8 +220,6 @@ onclick=(e)=>{
       }
       return (data);
   } 
-  
-
 
   render(){
     return(
@@ -245,10 +246,10 @@ onclick=(e)=>{
             <div style={{position:"relative",width: 1010, height: 550 }}> 
             <span className="right">
             </span>
-            <!--Updated localStorage -->
-            <Line options={{responsive: true}} data={this.getChartData(localStorage.getItem('todayDataLow').split(','),localStorage.getItem('todayDataHigh').split(','),localStorage.getItem('todayTime').split(','))} />
             {/* Here is the History chart, however there is a synchronize issue required to be solve */}
+            <div id="line"></div><br/>
             {/* <Line options={{responsive: true}} data={this.getChartData(this.state.todayDataLow,this.state.todayDataHigh,this.state.todayTime)} /> */}
+            <Line options={{responsive: true}} data={this.getChartData(localStorage.getItem('todayDataLow').split(','),localStorage.getItem('todayDataHigh').split(','),localStorage.getItem('todayTime').split(','))} />
             </div></div><br/>
             <div style={{ background: '#e8e8e8', padding: 24, minHeight: 350 }}>
             <span className="left"><big>Latest Cryptocurrency Rate</big> </span> <br/><br/>
