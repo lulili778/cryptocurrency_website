@@ -1,8 +1,7 @@
 # cryptocurrency_website
 
 Update:
-
-The graph issue had been solved with storing the live data to a localStorage place then retrive the data from the localstorage. Code updated
+The graph issue had been solved by storing the live data to a localStorage place then retrive the data from the localstorage (inside render()). Code updated.
 
 
 Bug: 
