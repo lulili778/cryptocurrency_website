@@ -9,6 +9,7 @@ import axios from 'axios'
 import './prices.css';
 import {Select} from 'antd'
 import {Line} from 'react-chartjs-2';
+import {useEffect} from 'react';
 
 
 
@@ -138,24 +139,22 @@ class PricePage extends Component{
   axios.get('https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=100&api_key=d86f430c22e3c06b84864a10dd728250ca595fb00926a3472392716b318464ad')
   .then(res=>{
     if (this._isMounted){
-    const today=res.data;
-    var todayDataLow=[]
-    var todayDataHigh=[]
-    var todayTime=[]
-    for (var i=0;i<(today.Data.Data).length; i++){
-      todayDataLow.push(today.Data.Data[i].low);
-      todayDataHigh.push(today.Data.Data[i].high)
-      var date = new Date(1000*today.Data.Data[i].time)
+    const day=res.data;
+    var dayDataLow=[]
+    var dayDataHigh=[]
+    var dayTime=[]
+    for (var i=0;i<(day.Data.Data).length; i++){
+      dayDataLow.push(day.Data.Data[i].low);
+      dayDataHigh.push(day.Data.Data[i].high)
+      var date = new Date(1000*day.Data.Data[i].time)
       var utcString = date.toUTCString().slice(5,16); 
-      todayTime.push(utcString)
+      dayTime.push(utcString)
     }
-    localStorage.setItem('todayDataHigh',todayDataHigh)
-    localStorage.setItem('todayDataLow',todayDataLow)
-    localStorage.setItem('todayTime',todayTime)
-    this.setState({today:today, todayDataLow : todayDataLow, todayDataHigh: todayDataHigh, todayTime: todayTime})
+    this.setState({day:day, dayDataLow : dayDataLow, dayDataHigh: dayDataHigh, dayTime: dayTime})
   }
 })
 }
+
 
 
 componentWillUnmount(){
@@ -222,6 +221,12 @@ onclick=(e)=>{
   } 
 
   render(){
+    //localStorage need to be called in render.
+    // console.log("Before",localStorage.getItem('dayHigh'))
+    localStorage.setItem('dayHigh',this.state.dayDataHigh)
+    console.log("after",localStorage.getItem('dayHigh'))
+    localStorage.setItem('dayLow',this.state.dayDataLow)
+    localStorage.setItem('dayTime',this.state.dayTime)
     return(
         <div>
         <Layout className="layout">
@@ -247,9 +252,8 @@ onclick=(e)=>{
             <span className="right">
             </span>
             {/* Here is the History chart, however there is a synchronize issue required to be solve */}
-            <div id="line"></div><br/>
             {/* <Line options={{responsive: true}} data={this.getChartData(this.state.todayDataLow,this.state.todayDataHigh,this.state.todayTime)} /> */}
-            <Line options={{responsive: true}} data={this.getChartData(localStorage.getItem('todayDataLow').split(','),localStorage.getItem('todayDataHigh').split(','),localStorage.getItem('todayTime').split(','))} />
+            <Line options={{responsive: true}} data={this.getChartData(localStorage.getItem('dayHigh').split(','),localStorage.getItem('dayLow').split(','),localStorage.getItem('dayTime').split(','))} />
             </div></div><br/>
             <div style={{ background: '#e8e8e8', padding: 24, minHeight: 350 }}>
             <span className="left"><big>Latest Cryptocurrency Rate</big> </span> <br/><br/>
