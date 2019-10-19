@@ -245,6 +245,8 @@ onclick=(e)=>{
             <div style={{position:"relative",width: 1010, height: 550 }}> 
             <span className="right">
             </span>
+            <!--Updated localStorage -->
+            <Line options={{responsive: true}} data={this.getChartData(localStorage.getItem('todayDataLow').split(','),localStorage.getItem('todayDataHigh').split(','),localStorage.getItem('todayTime').split(','))} />
             {/* Here is the History chart, however there is a synchronize issue required to be solve */}
             {/* <Line options={{responsive: true}} data={this.getChartData(this.state.todayDataLow,this.state.todayDataHigh,this.state.todayTime)} /> */}
             </div></div><br/>
