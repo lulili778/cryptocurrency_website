@@ -1,5 +1,9 @@
 # cryptocurrency_website
 
+Update:
+
+The graph issue had been solved with storing the live data to a localStorage place then retrive the data from the localstorage. Code updated
+
 
 Bug: 
 
