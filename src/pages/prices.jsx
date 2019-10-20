@@ -34,9 +34,8 @@ const {Header, Content, Sider, Footer} = Layout;
           alert("The cryptocurrency selected already exist in Favourite-list ")
           return (state)
         }
-        if (!(localStorage.getItem('favourite').includes([action.text]))){
-          state=[action.text].concat(state)
-          state=state.concat(localStorage.getItem('favourite'))
+        else{
+          state=[action.text].concat(localStorage.getItem('favourite'))
           localStorage.setItem('favourite',[state])
           return (state)
         }
