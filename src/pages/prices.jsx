@@ -10,6 +10,7 @@ import './prices.css';
 import {Select} from 'antd'
 import {Line} from 'react-chartjs-2';
 import {useEffect} from 'react';
+import { loadPartialConfig } from '@babel/core';
 
 
 
@@ -23,9 +24,22 @@ const {Header, Content, Sider, Footer} = Layout;
     const newState=[...state];
     switch (action.type){
       case 'ADD_Favourite':
-        state=[action.text].concat(state)
-        localStorage.setItem('favourite',[state])
-        return (state)
+        // state=[action.text].concat(state)
+        // state=state.concat(localStorage.getItem('favourite'))
+        // console.log("FAVOURITE",localStorage.getItem('favourite'))
+        // localStorage.setItem('favourite',[state])
+        // console.log("FAVOURITE 2:",localStorage.getItem('favourite'))
+        if (localStorage.getItem('favourite').includes([action.text])){
+          localStorage.setItem('favourite',localStorage.getItem('favourite'))
+          alert("The cryptocurrency selected already exist in Favourite-list ")
+          return (state)
+        }
+        if (!(localStorage.getItem('favourite').includes([action.text]))){
+          state=[action.text].concat(state)
+          state=state.concat(localStorage.getItem('favourite'))
+          localStorage.setItem('favourite',[state])
+          return (state)
+        }
       case 'REMOVE_Favourite':
         state=state.filter(state=> state !=action.text)
         // localStorage.removeItem('favourite')
@@ -44,15 +58,18 @@ const {Header, Content, Sider, Footer} = Layout;
         return state
       case 'REMOVE_unFavourite':
         state=state.filter(state=> state !=action.text)
-        // console.log('before remove',localStorage.getItem('unfavourite'))
+        console.log('before remove',localStorage.getItem('unfavourite'))
         localStorage.removeItem('unfavourite')
-        // console.log(' removing',localStorage.getItem('unfavourite'))
+        console.log(' removing',localStorage.getItem('unfavourite'))
         localStorage.setItem('unfavourite',[state])
-        // console.log('after remove',localStorage.getItem('unfavourite'))
+        console.log('after remove',localStorage.getItem('unfavourite'))
         return state
   }
   return newState
 }
+
+
+  
 
   const reducers= combineReducers({
     favourite : favReducer,
@@ -96,7 +113,11 @@ class PricePage extends Component{
           type: 'ADD_unFavourite',
           text: keys[i]
         })
-      }    
+      }   
+      // localStorage.removeItem('favourite')
+      // localStorage.setItem('favourite','BTC')
+      console.log(localStorage.getItem('favourite')) 
+
       const unF_local=localStorage.getItem('unfavourite').split(',')
       var unF_str= '<ul>'
       unF_local.forEach(function(uns) {
@@ -112,8 +133,10 @@ class PricePage extends Component{
         F_str += '</ul>'
         document.getElementById("Local_FavouritContainer").innerHTML = F_str;
       }
+      if(localStorage.getItem('favourite')== null){
+        document.getElementById("Local_FavouritContainer").innerHTML = "<br />";
+      }
   
-
       this.setState({store:store, keys:keys})
 
 // Using store to visualize state change.
@@ -170,10 +193,11 @@ onclick=(e)=>{
     type: 'ADD_Favourite',
     text: e.target.id
     })
-    store.dispatch({
-    type: 'REMOVE_unFavourite',
-    text: e.target.id
-    })
+    // store.dispatch({
+    // type: 'REMOVE_unFavourite',
+    // text: e.target.id
+    // })
+    console.log("second",localStorage.getItem('unfavourite')) 
     const unF_local=localStorage.getItem('unfavourite').split(',')
     var unF_str= '<ul>'
     unF_local.forEach(function(uns) {
@@ -224,7 +248,7 @@ onclick=(e)=>{
     //localStorage need to be called in render.
     // console.log("Before",localStorage.getItem('dayHigh'))
     localStorage.setItem('dayHigh',this.state.dayDataHigh)
-    console.log("after",localStorage.getItem('dayHigh'))
+    // console.log("after",localStorage.getItem('dayHigh'))
     localStorage.setItem('dayLow',this.state.dayDataLow)
     localStorage.setItem('dayTime',this.state.dayTime)
     return(
@@ -252,7 +276,7 @@ onclick=(e)=>{
             <span className="right">
             </span>
             {/* Here is the History chart, however there is a synchronize issue required to be solve */}
-            {/* <Line options={{responsive: true}} data={this.getChartData(this.state.todayDataLow,this.state.todayDataHigh,this.state.todayTime)} /> */}
+            {/* <Line options={{responsive: true}} data={this.getChartData(this.state.dayDataLow,this.state.dayDataHigh,this.state.dayTime)} /> */}
             <Line options={{responsive: true}} data={this.getChartData(localStorage.getItem('dayHigh').split(','),localStorage.getItem('dayLow').split(','),localStorage.getItem('dayTime').split(','))} />
             </div></div><br/>
             <div style={{ background: '#e8e8e8', padding: 24, minHeight: 350 }}>
