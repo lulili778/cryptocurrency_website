@@ -4,6 +4,7 @@ import logo from '../logo.svg';
 import {Layout, Menu, Breadcrumb, Icon} from 'antd';
 import {generate,presetPalettes} from '@ant-design/colors';
 import axios from 'axios'
+import { array } from 'prop-types';
 
 const {Header, Content, Sider, Footer} = Layout; 
 class DashBoard extends Component{
@@ -11,7 +12,9 @@ class DashBoard extends Component{
     constructor(props){
       super(props);
       this.state={
-          news: ''}
+          news: '',
+        cryptos:[]
+    }
       }
           
     componentDidMount(){
@@ -22,17 +25,30 @@ class DashBoard extends Component{
         if (this._isMounted){
         this.setState({news: news});
       }
-    })}
+    })
+
+    axios.get('https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,DASH,XRP,EOS,LTC,BCH,TRX,PRC,YBC,DANK,GIVE,KOBO,DT,CETI,SUP,XPD,NXTI&tsyms=SGD,USD&api_key=d86f430c22e3c06b84864a10dd728250ca595fb00926a3472392716b318464ad')
+    .then(res=>{
+        const cryptos=res.data;
+        if (this._isMounted){
+        this.setState({cryptos: cryptos});
+      }
+    }
+        )
+}
 
     componentWillUnmount(){
         this._isMounted = false;
       }
 
-            
-
 
     render(){
         console.log(this.state.news)
+        console.log((Object.keys(this.state.cryptos).map((key)=>({key}))))
+
+        
+        // console.log(Object.keys(this.state.cryptos).map((key)=>({[key].SGD})))
+
     return(
         <div>
         <Layout className="layout">
@@ -53,6 +69,14 @@ class DashBoard extends Component{
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
                 <Breadcrumb.Item>News</Breadcrumb.Item>
             </Breadcrumb>
+            <div>
+            <marquee behavior='scroll' direction='left' style={{color:"#0050b3",width:'100%'}}> 
+            <div>{Object.keys(this.state.cryptos).map((key)=>(
+                <div><big>
+                <span className='left'><pre> {key} SGD{this.state.cryptos[key].SGD}</pre></span></big>
+                </div>
+                ))}</div></marquee>
+            </div>
             <div style={{ background: '#fff', padding: 24, minHeight: 350 }}><big><span className='left'>Latest Cryptocurrency News</span></big><br/>
             <div>{Object.keys(this.state.news).map((key)=>(
                     <div id="news-container">
