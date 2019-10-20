@@ -9,6 +9,8 @@ import axios from 'axios'
 import './prices.css';
 import {Select} from 'antd'
 import {Line} from 'react-chartjs-2';
+import {useEffect} from 'react';
+import { loadPartialConfig } from '@babel/core';
 
 
 
@@ -22,13 +24,67 @@ const {Header, Content, Sider, Footer} = Layout;
     const newState=[...state];
     switch (action.type){
       case 'ADD_Favourite':
-        state=[action.text].concat(state)
-        localStorage.setItem('favourite',[state])
-        return (state)
+        // state=[action.text].concat(state)
+        // state=state.concat(localStorage.getItem('favourite'))
+        // console.log("FAVOURITE",localStorage.getItem('favourite'))
+        // localStorage.setItem('favourite',[state])
+        // console.log("FAVOURITE 2:",localStorage.getItem('favourite'))
+        if (localStorage.getItem('favourite')==null){
+          state=state.concat([action.text])
+          localStorage.setItem('favourite',state)
+          console.log('I am here')
+        }
+        if (localStorage.getItem('favourite')!=null&&localStorage.getItem('favourite').includes([action.text])){
+          localStorage.setItem('favourite',localStorage.getItem('favourite'))
+          alert("The cryptocurrency selected already exist in Favourite-list ")
+          return (state)
+        }
+        else{
+          state=[action.text].concat(localStorage.getItem('favourite'))
+          localStorage.setItem('favourite',[state])
+          console.log('state_ADD',state)
+          return (state)
+        }
       case 'REMOVE_Favourite':
+        // if (state.length==2){
+        //   if(state[0] != action.text){
+        //     var middle=state[1].split(',')
+        //     console.log('middle1',middle)
+        //     middle=middle.filter(middle=> middle !=action.text)
+        //     console.log('middle2',middle)
+        //     middle=state[0].concat(',',middle)
+        //     console.log('middle3',middle)
+        //     localStorage.setItem('favourite',middle)
+        //     console.log('FAVOURITE: length2',localStorage.getItem('favourite'))
+        // }
+        // if (state[0] == action.text){
+        //   state=state.filter(state=> state !=action.text)
+        //   localStorage.setItem('favourite',state)
+        //   console.log('FAVOURITE: length2 part2',localStorage.getItem('favourite'))
+        // }
+        // }
+        // if(state.length==1){
+        //   var middle=state[0].split(',')
+        //   middle=middle.filter(middle=> middle !=action.text)
+        //   localStorage.setItem('favourite',middle)
+
+          // console.log('state0',state[0])
+          // var middle=state[0].split(',')
+          // console.log('middle4',middle)
+          // middle=middle.filter(middle=> middle !=action.text)
+          // console.log('middle5',middle)
+          // localStorage.setItem('favourite',middle)
+          // console.log('FAVOURITE: length1',localStorage.getItem('favourite'))
+        // }
+
+       
         state=state.filter(state=> state !=action.text)
         // localStorage.removeItem('favourite')
-        // localStorage.setItem('favourite',[state])
+        console.log('state',state[0])
+        localStorage.setItem('favourite',[state])
+        console.log('you',localStorage.getItem('favourite'))
+        console.log('you: F',action.text)
+
         return state
     }
     return newState
@@ -43,15 +99,18 @@ const {Header, Content, Sider, Footer} = Layout;
         return state
       case 'REMOVE_unFavourite':
         state=state.filter(state=> state !=action.text)
-        // console.log('before remove',localStorage.getItem('unfavourite'))
+        console.log('before remove',localStorage.getItem('unfavourite'))
         localStorage.removeItem('unfavourite')
-        // console.log(' removing',localStorage.getItem('unfavourite'))
+        console.log(' removing',localStorage.getItem('unfavourite'))
         localStorage.setItem('unfavourite',[state])
-        // console.log('after remove',localStorage.getItem('unfavourite'))
+        console.log('after remove',localStorage.getItem('unfavourite'))
         return state
   }
   return newState
 }
+
+
+  
 
   const reducers= combineReducers({
     favourite : favReducer,
@@ -95,24 +154,30 @@ class PricePage extends Component{
           type: 'ADD_unFavourite',
           text: keys[i]
         })
-      }    
+      }   
+      // localStorage.removeItem('favourite')
+      // localStorage.setItem('favourite','BTC')
+      console.log(localStorage.getItem('favourite')) 
+
       const unF_local=localStorage.getItem('unfavourite').split(',')
       var unF_str= '<ul>'
       unF_local.forEach(function(uns) {
         unF_str += '<div id="crypto-container">'+uns +'&nbsp&nbsp&nbsp&nbsp&nbsp'+' SGD'+ cryptos[uns].SGD+'&nbsp'+'<button '+'align="right"'+'id='+'"'+uns+'"'+' onClick={this.onclick} position>Add</button>'+'</div>'+'<br />';})
       unF_str += '</ul>'
       document.getElementById("Local_unfavouriteContainer").innerHTML = unF_str
-      
+      console.log(localStorage.getItem('favourite'))
       if (localStorage.getItem('favourite')!= null){
         const F_local=localStorage.getItem('favourite').split(',')
         var F_str= '<ul>'
         F_local.forEach(function(fs) {
-          F_str += '<div id="crypto-container">'+fs +'&nbsp&nbsp&nbsp&nbsp&nbsp'+' SGD'+ cryptos[fs].SGD+'&nbsp'+'</div>'+'<br />';})
-        F_str += '</ul>'
+          F_str += '<div id="crypto-container">'+ fs +'&nbsp&nbsp&nbsp&nbsp&nbsp'+' SGD'+ cryptos[fs].SGD+'&nbsp'+'<button '+'align="right"'+'id='+'"'+fs+'"'+' onClick={this.onremove} position>Remove</button>'+'</div>'+'<br />';})
+          F_str += '</ul>'
         document.getElementById("Local_FavouritContainer").innerHTML = F_str;
       }
+      if(localStorage.getItem('favourite')== null){
+        document.getElementById("Local_FavouritContainer").innerHTML = "<br />";
+      }
   
-
       this.setState({store:store, keys:keys})
 
 // Using store to visualize state change.
@@ -138,24 +203,22 @@ class PricePage extends Component{
   axios.get('https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=100&api_key=d86f430c22e3c06b84864a10dd728250ca595fb00926a3472392716b318464ad')
   .then(res=>{
     if (this._isMounted){
-    const today=res.data;
-    var todayDataLow=[]
-    var todayDataHigh=[]
-    var todayTime=[]
-    for (var i=0;i<(today.Data.Data).length; i++){
-      todayDataLow.push(today.Data.Data[i].low);
-      todayDataHigh.push(today.Data.Data[i].high)
-      var date = new Date(1000*today.Data.Data[i].time)
+    const day=res.data;
+    var dayDataLow=[]
+    var dayDataHigh=[]
+    var dayTime=[]
+    for (var i=0;i<(day.Data.Data).length; i++){
+      dayDataLow.push(day.Data.Data[i].low);
+      dayDataHigh.push(day.Data.Data[i].high)
+      var date = new Date(1000*day.Data.Data[i].time)
       var utcString = date.toUTCString().slice(5,16); 
-      todayTime.push(utcString)
+      dayTime.push(utcString)
     }
-    localStorage.setItem('todayDataHigh',todayDataHigh)
-    localStorage.setItem('todayDataLow',todayDataLow)
-    localStorage.setItem('todayTime',todayTime)
-    this.setState({today:today, todayDataLow : todayDataLow, todayDataHigh: todayDataHigh, todayTime: todayTime})
+    this.setState({day:day, dayDataLow : dayDataLow, dayDataHigh: dayDataHigh, dayTime: dayTime})
   }
 })
 }
+
 
 
 componentWillUnmount(){
@@ -171,10 +234,11 @@ onclick=(e)=>{
     type: 'ADD_Favourite',
     text: e.target.id
     })
-    store.dispatch({
-    type: 'REMOVE_unFavourite',
-    text: e.target.id
-    })
+    // store.dispatch({
+    // type: 'REMOVE_unFavourite',
+    // text: e.target.id
+    // })
+    console.log("second",localStorage.getItem('unfavourite')) 
     const unF_local=localStorage.getItem('unfavourite').split(',')
     var unF_str= '<ul>'
     unF_local.forEach(function(uns) {
@@ -185,11 +249,41 @@ onclick=(e)=>{
     const F_local=localStorage.getItem('favourite').split(',')
     var F_str= '<ul>'
     F_local.forEach(function(fs) {
-      F_str += '<div id="crypto-container">'+ fs +'&nbsp&nbsp&nbsp&nbsp&nbsp'+' SGD'+ cryptos[fs].SGD+'&nbsp'+'</div>'+'<br />';})
+      F_str += '<div id="crypto-container">'+ fs +'&nbsp&nbsp&nbsp&nbsp&nbsp'+' SGD'+ cryptos[fs].SGD+'&nbsp'+'<button '+'align="right"'+'id='+'"'+fs+'"'+' onClick={this.onremove} position>Remove</button>'+'</div>'+'<br />';})
     F_str += '</ul>'
     document.getElementById("Local_FavouritContainer").innerHTML = F_str;
     }
   }
+  onremove=(e)=>{
+    const store =this.state.store
+    const cryptos=this.state.cryptos
+    
+    if (localStorage.getItem('favourite').split(',').includes(e.target.id)){
+      store.dispatch({
+      type: 'REMOVE_Favourite',
+      text: e.target.id
+      })
+      // store.dispatch({
+      // type: 'REMOVE_unFavourite',
+      // text: e.target.id
+      // })
+      console.log("second",localStorage.getItem('favourite')) 
+      const unF_local=localStorage.getItem('unfavourite').split(',')
+      var unF_str= '<ul>'
+      unF_local.forEach(function(uns) {
+        unF_str += '<div id="crypto-container">'+uns +'&nbsp&nbsp&nbsp&nbsp&nbsp'+' SGD'+ cryptos[uns].SGD+'&nbsp'+'<button '+'align="right"'+'id='+'"'+uns+'"'+' onClick={this.onclick} position>Add</button>'+'</div>'+'<br />';})
+      unF_str += '</ul>'
+      document.getElementById("Local_unfavouriteContainer").innerHTML = unF_str
+        
+      const F_local=localStorage.getItem('favourite').split(',')
+      var F_str= '<ul>'
+      F_local.forEach(function(fs) {
+        F_str += '<div id="crypto-container">'+ fs +'&nbsp&nbsp&nbsp&nbsp&nbsp'+' SGD'+ cryptos[fs].SGD+'&nbsp'+'<button '+'align="right"'+'id='+'"'+fs+'"'+' onClick={this.onremove} position>Remove</button>'+'</div>'+'<br />';})
+      F_str += '</ul>'
+      document.getElementById("Local_FavouritContainer").innerHTML = F_str;
+      }
+    }
+
 
 
   setGradientColor=(canvas, color)=>{
@@ -222,6 +316,12 @@ onclick=(e)=>{
   } 
 
   render(){
+    //localStorage need to be called in render.
+    // console.log("Before",localStorage.getItem('dayHigh'))
+    localStorage.setItem('dayHigh',this.state.dayDataHigh)
+    // console.log("after",localStorage.getItem('dayHigh'))
+    localStorage.setItem('dayLow',this.state.dayDataLow)
+    localStorage.setItem('dayTime',this.state.dayTime)
     return(
         <div>
         <Layout className="layout">
@@ -247,14 +347,13 @@ onclick=(e)=>{
             <span className="right">
             </span>
             {/* Here is the History chart, however there is a synchronize issue required to be solve */}
-            <div id="line"></div><br/>
-            {/* <Line options={{responsive: true}} data={this.getChartData(this.state.todayDataLow,this.state.todayDataHigh,this.state.todayTime)} /> */}
-            <Line options={{responsive: true}} data={this.getChartData(localStorage.getItem('todayDataLow').split(','),localStorage.getItem('todayDataHigh').split(','),localStorage.getItem('todayTime').split(','))} />
+            {/* <Line options={{responsive: true}} data={this.getChartData(this.state.dayDataLow,this.state.dayDataHigh,this.state.dayTime)} /> */}
+            <Line options={{responsive: true}} data={this.getChartData(localStorage.getItem('dayHigh').split(','),localStorage.getItem('dayLow').split(','),localStorage.getItem('dayTime').split(','))} />
             </div></div><br/>
             <div style={{ background: '#e8e8e8', padding: 24, minHeight: 350 }}>
             <span className="left"><big>Latest Cryptocurrency Rate</big> </span> <br/><br/>
             <span className="left"><div><big><font color='#096dd9'>Favourite-List</font></big></div></span><br/><br/>
-            <div id="Local_FavouritContainer" onClick={this.onclick}><span className='left'></span></div><br/>
+            <div id="Local_FavouritContainer" onClick={this.onremove}><span className='left'></span></div><br/>
                 <div><big>All Cryptocurrencies </big></div><br/>
                 <div id="Local_unfavouriteContainer" onClick={this.onclick}></div> </div>  
         </Content>
