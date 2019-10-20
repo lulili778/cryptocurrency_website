@@ -1,4 +1,8 @@
 # cryptocurrency_website
+Update on 20/10/2019:
+1. Changes made to states in redux component
+2.Add alert messages 
+
 
 Update:
 
