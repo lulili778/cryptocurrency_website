@@ -1,7 +1,9 @@
 # cryptocurrency_website
-Update on 20/10/2019:
+Update on 20/10/2019 (prices.jsx patch 2):
 1. Changes made to states in redux component
+
 2.Add alert messages 
+
 
 
 Update:
