@@ -29,7 +29,11 @@ const {Header, Content, Sider, Footer} = Layout;
         // console.log("FAVOURITE",localStorage.getItem('favourite'))
         // localStorage.setItem('favourite',[state])
         // console.log("FAVOURITE 2:",localStorage.getItem('favourite'))
-        if (localStorage.getItem('favourite').includes([action.text])){
+        if (localStorage.getItem('favourite')==null){
+          state=state.concat([action.text])
+          localStorage.setItem('favourite',state)
+        }
+        if (localStorage.getItem('favourite')!=null&&localStorage.getItem('favourite').includes([action.text])){
           localStorage.setItem('favourite',localStorage.getItem('favourite'))
           alert("The cryptocurrency selected already exist in Favourite-list ")
           return (state)
