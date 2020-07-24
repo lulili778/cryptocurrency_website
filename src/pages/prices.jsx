@@ -81,7 +81,7 @@ class PricePage extends Component{
 
   componentDidMount(){
     this._isMounted=true;
-    axios.get('https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,DASH,XRP,EOS,LTC,BCH,TRX,PRC,YBC,DANK,GIVE,KOBO,DT,CETI,SUP,XPD,NXTI&tsyms=SGD,USD&api_key=d86f430c22e3c06b84864a10dd728250ca595fb00926a3472392716b318464ad')
+    axios.get('https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,DASH,XRP,EOS,LTC,BCH,TRX,PRC,YBC,DANK,GIVE,KOBO,DT,CETI,SUP,XPD,NXTI&tsyms=SGD,USD&api_key=4159168a1743c1005c8a3805c9b2cd52e2e882ce4f4bc60608b51e07d5657b58')
     .then(res=>{
         const cryptos=res.data;
         if (this._isMounted){
@@ -135,7 +135,7 @@ class PricePage extends Component{
 
     });
 
-  axios.get('https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=100&api_key=d86f430c22e3c06b84864a10dd728250ca595fb00926a3472392716b318464ad')
+  axios.get('https://min-api.cryptocompare.com/data/v2/histoday?fsym=BTC&tsym=USD&limit=100&api_key=4159168a1743c1005c8a3805c9b2cd52e2e882ce4f4bc60608b51e07d5657b58')
   .then(res=>{
     if (this._isMounted){
     const today=res.data;
@@ -248,8 +248,8 @@ onclick=(e)=>{
             </span>
             {/* Here is the History chart, however there is a synchronize issue required to be solve */}
             <div id="line"></div><br/>
-            {/* <Line options={{responsive: true}} data={this.getChartData(this.state.todayDataLow,this.state.todayDataHigh,this.state.todayTime)} /> */}
-            <Line options={{responsive: true}} data={this.getChartData(localStorage.getItem('todayDataLow').split(','),localStorage.getItem('todayDataHigh').split(','),localStorage.getItem('todayTime').split(','))} />
+            <Line options={{responsive: true}} data={this.getChartData(this.state.todayDataLow,this.state.todayDataHigh,this.state.todayTime)} />
+            {/* <Line options={{responsive: true}} data={this.getChartData(localStorage.getItem('todayDataLow').split(','),localStorage.getItem('todayDataHigh').split(','),localStorage.getItem('todayTime').split(','))} /> */}
             </div></div><br/>
             <div style={{ background: '#e8e8e8', padding: 24, minHeight: 350 }}>
             <span className="left"><big>Latest Cryptocurrency Rate</big> </span> <br/><br/>
