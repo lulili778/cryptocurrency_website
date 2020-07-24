@@ -9,7 +9,7 @@ import {BrowserRouter as Router,Route,Switch,Link,Redirect} from "react-router-d
 import DashBoard from './pages/dashboard';
 import NotFoundPage from './pages/404';
 import PricePage from './pages/prices';
-import Playground from './pages/playground';
+import Playground from './playground/playground';
 class App extends Component{
   render() {
     return (
@@ -18,8 +18,9 @@ class App extends Component{
         <Route exact path="/News" component={DashBoard} />   
         <Route exact path="/Prices" component={PricePage} />
         <Route exact path='/404' component={NotFoundPage} />
-        <Redirect to= "/Prices"/>
         <Route exact path="/playground" component={Playground} />
+
+        <Redirect to= "/Prices"/>
       </Switch>
     </Router>
     )
