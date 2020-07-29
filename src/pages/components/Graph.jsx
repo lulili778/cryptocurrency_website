@@ -13,8 +13,8 @@ export default props =>{
         plot :{
             labels:[],
             datasets:[
-              {data:[]},
-              {data:[]}
+              {data1:[]},
+              {data2:[]}
             ]
             },
 
@@ -40,7 +40,21 @@ export default props =>{
                     labels : Object.keys(res.data.Data.Data).map((item)=>(
                         (new Date(1000*res.data.Data.Data[item].time)).toUTCString().slice(5,16)
                     )
-                    )
+                    ),
+                    datasets:[
+                        {
+                            data : Object.keys(res.data.Data.Data).map((item)=>(
+                                (res.data.Data.Data[item].low)
+                            )
+                            )
+                        },
+                        {
+                            data : Object.keys(res.data.Data.Data).map((item)=>(
+                                (res.data.Data.Data[item].high)
+                            )
+                            )
+                        }
+                    ]
                 }
                 // plot :getChartData(res.data.Data.Data,res.data.Data.Data.todayDataLow,res.data.Data.Data.todayDataHigh,res.data.Data.Data.todayTime)
                 })
@@ -77,8 +91,8 @@ export default props =>{
     
     return (
         <div>
-            <li>{JSON.stringify(datas)}</li>
-            <Line></Line>
+            {/* <li>{JSON.stringify(datas)}</li> */}
+            <Line data={datas.plot}></Line>
         </div>
     )
 
