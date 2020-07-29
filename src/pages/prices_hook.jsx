@@ -60,7 +60,7 @@ export default props => {
                 <Breadcrumb.Item>Price</Breadcrumb.Item>
             </Breadcrumb>
             <div className="site-card-border-less-wrapper">
-            <Card title="Favourite Cryptocurrency lists" bordered={false} style={{ span: 8 }}>
+            <Card title="Bitcoin Historical Price Graph (SGD v.s Date)" bordered={false} style={{ span: 8 }}>
               <Graph />
             </Card>
             </div>
@@ -68,12 +68,12 @@ export default props => {
             <div className="site-card-wrapper">
             <Row gutter={24}>
             <Col span={12}>
-              <Card title="Favourite Cryptocurrency lists" bordered={false}>
+              <Card title="Favourite Cryptocurrency list" bordered={false}>
                 <CryptocurrencyList />
               </Card>
             </Col>
             <Col span={12}>
-              <Card title="All Cryptocurrency lists" bordered={false}>
+              <Card title="All Cryptocurrency list" bordered={false}>
                 <AddItem />
               </Card>
             </Col>

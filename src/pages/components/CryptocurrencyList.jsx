@@ -1,5 +1,5 @@
 import React, {useContext, useState,useEffect} from "react";
-import { Radio, Input } from 'antd';
+import { Radio, Input,Button } from 'antd';
 
 // State
 import {
@@ -71,7 +71,7 @@ export default props => {
                     </Radio>
                   </div>
                 ))}
-                <button disabled={disableButton()} id="remove" onClick={handleRemoveItem}> Remove</button>
+                <Button type="primary" disabled={disableButton()} id="remove" onClick={handleRemoveItem}> Remove</Button>
       </Radio.Group>
     </div>
   )

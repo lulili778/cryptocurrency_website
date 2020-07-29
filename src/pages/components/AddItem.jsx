@@ -2,12 +2,12 @@ import React, {useContext, useState,useEffect} from "react";
 import axios from 'axios'
 //state
 import {CryptoContext, actions, createAction} from "../reducer_hook";
-import { Radio, Input } from 'antd';
+import { Radio, Input, Button } from 'antd';
 
 
 export default props =>{
 
-    const _defaultCryptoSelected = ("")
+    // const _defaultCryptoSelected = ("")
 
 
 
@@ -112,14 +112,13 @@ export default props =>{
 
     return(
         <div>
-            <h1>All Cryptocurrency List</h1>
             <Radio.Group onChange={setcrypos}>
                 {all_cryptoList && all_cryptoList.map(item => (
                     <Radio id={item.name} style={radioStyle} value={item.price}>
                         {item.name} ${item.price}
                     </Radio>
                 ))}
-            <button id="add" onClick ={handleAddItem}> Add</button>
+            <Button type="primary" id="add" onClick ={handleAddItem}> Add</Button>
             </Radio.Group>
 
 
