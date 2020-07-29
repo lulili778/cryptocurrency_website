@@ -2,32 +2,29 @@ import React, {useContext, useState,useEffect} from "react";
 import axios from 'axios'
 //state
 import {CryptoContext, actions, createAction} from "../reducer_hook";
-import { Radio, Input, Button } from 'antd';
+import { Radio, Input, Button,Modal } from 'antd';
 
 
 export default props =>{
 
-    // const _defaultCryptoSelected = ("")
 
 
 
     const dispatch = useContext(CryptoContext);
     const [cryptos,setCryptos] = useState()
 
-    // const handleCrptoSelected = evt =>{
-    //     console.log("...",cryptos)
-    //     setcryptos({
-    //         ...cryptos,
-    //         "name" : evt.target.value
-            
 
-    //     });
-    //     console.log("id",evt.target.id)
-    //     console.log("value",evt.target.value)
-    //     console.log("fields",cryptos)
-    // }
-
-
+    function info() {
+        Modal.info({
+          title: 'This is a notification message',
+          content: (
+            <div>
+              <p>Success ! The selected cryptocurrency already exist in the favourote list</p>
+            </div>
+          ),
+          onOk() {},
+        });
+      }
 
     function is_localstorageEmpty(current_fav,crypto){
         if (current_fav === null){
@@ -77,6 +74,7 @@ export default props =>{
         console.log("NAME OF CRYPTO",cryptos["name"])
         const is_duplicate = check_duplicate(cryptos["name"])
         if (is_duplicate === true){
+            info()
             console.log("Success ! already added in the favourote list")
             return ("Success ! already added in the favourote list")
         }
