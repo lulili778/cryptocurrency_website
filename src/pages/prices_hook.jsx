@@ -36,7 +36,7 @@ export default props => {
   return (
     <CryptoContext.Provider value={dispatch}>
       <StateContext.Provider value={state}>
-      <AddItem/>
+      {/* <AddItem/> */}
 
         <h1>Favourite Cryptocurrency lists</h1>
         {/* <hr />
@@ -49,13 +49,14 @@ export default props => {
             </div>
             <div className="column"> */}
               <h2>Cryptocurrency list</h2>
-              <CryptocurrencyList />
+              {/* <CryptocurrencyList /> */}
             {/* </div>
           </div>
         )} */}
         <br/>
         <h2>Graph</h2>
-        {/* < Graph /> */}
+        < Graph />
+        <h1>DONE</h1>
       </StateContext.Provider>
     </CryptoContext.Provider>
   );

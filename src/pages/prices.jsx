@@ -218,6 +218,7 @@ onclick=(e)=>{
         set.data= hours[i]
         });
       }
+      console.log("DATA",data)
       return (data);
   } 
 

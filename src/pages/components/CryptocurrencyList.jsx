@@ -61,9 +61,6 @@ export default props => {
     }
     
   }
-
-
-
   return (
     <div>
        <Radio.Group onChange={setcrypos}>
