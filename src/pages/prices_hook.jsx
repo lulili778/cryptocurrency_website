@@ -10,6 +10,7 @@ import { reducer, StateContext, CryptoContext, actions } from "./reducer_hook";
 // Components
 import AddItem from "./components/AddItem";
 import CryptocurrencyList from "./components/CryptocurrencyList";
+import Graph from "./components/Graph";
 
 export default props => {
   // initialState1()
@@ -52,6 +53,9 @@ export default props => {
             {/* </div>
           </div>
         )} */}
+        <br/>
+        <h2>Graph</h2>
+        {/* < Graph /> */}
       </StateContext.Provider>
     </CryptoContext.Provider>
   );

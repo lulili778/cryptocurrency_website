@@ -23,13 +23,13 @@ export default props => {
   const handleRemoveItem = evt => {
     dispatch(createAction(actions.REMOVE_CRYPTO_FAV, cryptos));
     const fav = localStorage.getItem('fav').split(',')
-    fav.pop(cryptos)
-    localStorage.setItem('fav',fav.join(','))
-    console.log('FAV',fav)
-
+    if (fav.length >= 2){
+      const newFav = fav.filter(item => item !== cryptos)
+      localStorage.setItem('fav',newFav.join(','))
+    }else{
+      localStorage.removeItem('fav')
+    }
   };
-
-
 
 
   const cryptoList = (state.cryptoList)
@@ -40,6 +40,29 @@ export default props => {
     lineHeight: '30px',
   };
 
+  function disableButton (){
+    const isfav = localStorage.getItem('fav')
+    console.log("isFAV",isfav)
+    if (isfav !== null ){
+      const fav = localStorage.getItem('fav').split(',')
+      const isEmpty = fav.length
+      console.log("isempty",isEmpty)
+      console.log("isempty_bol",isEmpty <= 1 )
+      if (isEmpty === 0 ){
+        console.log(true)
+        return (true)
+      }else{
+        console.log(false)
+        return (false)
+      }
+    }else{
+      console.log(true)
+      return (true)
+    }
+    
+  }
+
+
 
   return (
     <div>
@@ -49,11 +72,9 @@ export default props => {
                     <Radio id={item.name} style={radioStyle} value={item.price}>
                         {item.name} ${item.price}
                     </Radio>
-
                   </div>
                 ))}
-                <button id="remove" onClick={handleRemoveItem}> Remove</button>
-
+                <button disabled={disableButton()} id="remove" onClick={handleRemoveItem}> Remove</button>
       </Radio.Group>
     </div>
   )
