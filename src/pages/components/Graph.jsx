@@ -13,8 +13,8 @@ export default props =>{
         plot :{
             labels:[],
             datasets:[
-              {data1:[]},
-              {data2:[]}
+              {data:[]},
+              {data:[]}
             ]
             },
 
@@ -56,43 +56,37 @@ export default props =>{
                         }
                     ]
                 }
-                // plot :getChartData(res.data.Data.Data,res.data.Data.Data.todayDataLow,res.data.Data.Data.todayDataHigh,res.data.Data.Data.todayTime)
                 })
         )
     },[''])
 
-    console.log("DATAS",datas.plot) 
-    // console.log("TODAY",datas.plot)
+    // console.log("DATAS",datas.plot) 
 
 
-    // const getChartData = () =>{
-
-    //     if (data.datasets){
-    //       let colors=["rgba(235,0,25,0.75)","rgba(0,0,255,0.75)"] 
-    //       let labels=["Low","High"]
-    //       let hours=[datas.todayDataLow,datas.todayDataHigh]
-    //       let timelables=datas.todayTime
-    //       data.labels= timelables
-    //       data.datasets.forEach((set,i)=>{
-    //       set.label= labels[i]
-    //       set.backgroundColor="transparent"
-    //       set.borderColor=colors[i];
-    //       set.borderWidth =2;
-    //       set.labelColor=colors[i]
-    //       set.data= hours[i]
-    //       });
-    //     }
-    //     console.log("DATA",data)
-    //     return (data);
-    // } 
-
-
+    const getChartData = () =>{
+        const data = datas.plot;
+        if (data){
+          let colors=["rgba(235,0,25,0.75)","rgba(0,0,255,0.75)"] 
+          let labels=["Low","High"]
+          let hours=[datas.todayDataLow,datas.todayDataHigh]
+          let timelables=datas.todayTime
+          data.labels= timelables
+          data.datasets.forEach((set,i)=>{
+          set.label= labels[i]
+          set.backgroundColor="transparent"
+          set.borderColor=colors[i];
+          set.borderWidth =2;
+          set.labelColor=colors[i]
+          set.data= hours[i]
+          });
+        }
+        return (data);
+    } 
 
     
     return (
         <div>
-            {/* <li>{JSON.stringify(datas)}</li> */}
-            <Line data={datas.plot}></Line>
+            <Line data={getChartData()}></Line>
         </div>
     )
 
