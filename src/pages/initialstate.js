@@ -27,6 +27,7 @@ function getInitialData(){
 
 
 
+
 export default {
     loadingCrypto : false,
         cryptoList : getInitialData()
