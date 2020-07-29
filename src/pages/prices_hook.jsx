@@ -1,4 +1,6 @@
 import React, { useReducer, useEffect } from "react";
+import {Layout, Menu, Breadcrumb, Icon, Card,Col, Row} from 'antd';
+import {Link} from "react-router-dom";
 
 // Styles
 // import "./styles.css";
@@ -11,6 +13,10 @@ import { reducer, StateContext, CryptoContext, actions } from "./reducer_hook";
 import AddItem from "./components/AddItem";
 import CryptocurrencyList from "./components/CryptocurrencyList";
 import Graph from "./components/Graph";
+
+
+
+const {Header, Content, Sider, Footer} = Layout; 
 
 export default props => {
   // initialState1()
@@ -36,27 +42,46 @@ export default props => {
   return (
     <CryptoContext.Provider value={dispatch}>
       <StateContext.Provider value={state}>
-      {/* <AddItem/> */}
-
-        <h1>Favourite Cryptocurrency lists</h1>
-        {/* <hr />
-        {state.loadingCryptocurrencies && <div className="loading">...loading</div>}
-        {!state.loadingCryptocurrencies && (
-          <div className="columns">
-            <div className="column">
-              <h2>Add a new cryptocurrency</h2>
-              <AddItem />
+        <Layout className="layout">
+        <Header>
+            <div className="logo" />
+            <Menu
+                theme="dark"
+                mode="horizontal"
+                defaultSelectedKeys={['2']}
+                style={{ lineHeight: '64px' }}>
+                <Menu.Item key="1"><Link to ="/News">Cryptocurrency News</Link></Menu.Item>
+                <Menu.Item key="2">Price</Menu.Item>
+            </Menu>
+        </Header>        
+        <Content style={{ padding: '0 50px' }}>
+            <Breadcrumb style={{ margin: '16px 0' }}>
+                <Breadcrumb.Item>Home</Breadcrumb.Item>
+                <Breadcrumb.Item>Price</Breadcrumb.Item>
+            </Breadcrumb>
+            <div className="site-card-border-less-wrapper">
+            <Card title="Favourite Cryptocurrency lists" bordered={false} style={{ span: 8 }}>
+              <Graph />
+            </Card>
             </div>
-            <div className="column"> */}
-              <h2>Cryptocurrency list</h2>
-              {/* <CryptocurrencyList /> */}
-            {/* </div>
+            <br/>
+            <div className="site-card-wrapper">
+            <Row gutter={24}>
+            <Col span={12}>
+              <Card title="Favourite Cryptocurrency lists" bordered={false}>
+                <CryptocurrencyList />
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card title="All Cryptocurrency lists" bordered={false}>
+                <AddItem />
+              </Card>
+            </Col>
+            </Row>
           </div>
-        )} */}
-        <br/>
-        <h2>Graph</h2>
-        < Graph />
-        <h1>DONE</h1>
+        </Content>
+        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+        </Layout>
       </StateContext.Provider>
     </CryptoContext.Provider>
   );
