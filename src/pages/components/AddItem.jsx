@@ -26,6 +26,18 @@ export default props =>{
         });
       }
 
+      function success() {
+        Modal.info({
+          title: 'This is a notification message',
+          content: (
+            <div>
+              <p>Success! Added to favourite list</p>
+            </div>
+          ),
+          onOk() {},
+        });
+      }
+
     function is_localstorageEmpty(current_fav,crypto){
         if (current_fav === null){
             const fav_string = crypto
@@ -81,6 +93,7 @@ export default props =>{
         else{
             dispatch(createAction(actions.ADD_CRYPTO_FAV,cryptos));
             localStorage.setItem("fav",fav_string)
+            success()
             console.log("Success! Added to favourite list")
             return ("Success! Added to favourite list")
         }
