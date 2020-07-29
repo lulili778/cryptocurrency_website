@@ -17,16 +17,11 @@ export default props => {
       ...fields,
       [evt.target.id]: evt.target.value
     });
-    console.log("id",evt.target.id)
-    console.log("value",evt.target.value)
-    console.log("fields",fields)
-
   };
 
   const handleFormSubmit = evt => {
     evt.preventDefault();
     dispatch(createAction(actions.ADD_ITEM, fields));
-    console.log("~~~~~~~~~~~~~`",fields)
     setFields(_defaultFields);
   };
 

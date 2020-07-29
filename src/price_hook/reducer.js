@@ -33,7 +33,6 @@ export const reducer = (state, action) => {
         loadingItems: false
       };
     case actions.ADD_ITEM:
-      console.log("ADD_ITEM")
       const nextId = Math.max.apply(
         null,
         state.shoppingList.map(item => item.id)

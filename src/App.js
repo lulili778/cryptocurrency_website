@@ -10,6 +10,9 @@ import DashBoard from './pages/dashboard';
 import NotFoundPage from './pages/404';
 import PricePage from './pages/prices';
 import Playground from './playground/playground';
+// import Prices_hook from './price_hook/playground';
+import Prices_hook from './pages/prices_hook'
+
 class App extends Component{
   render() {
     return (
@@ -19,6 +22,7 @@ class App extends Component{
         <Route exact path="/Prices" component={PricePage} />
         <Route exact path='/404' component={NotFoundPage} />
         <Route exact path="/playground" component={Playground} />
+        <Route exact path="/pricehook" component={Prices_hook} />
 
         <Redirect to= "/Prices"/>
       </Switch>

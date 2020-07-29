@@ -11,7 +11,7 @@ const {Header, Content, Sider, Footer} = Layout;
 function DashBoard() {
     const [news, setNews] = useState('')
     useEffect(()=>{
-        axios.get('http://newsapi.org/v2/everything?q=bitcoin&from=2020-06-24&sortBy=publishedAt&apiKey=6c19551830ff42658f68b53c37b3ea84')
+        axios.get('http://newsapi.org/v2/everything?q=bitcoin&from=2020-06-28&sortBy=publishedAt&apiKey=6c19551830ff42658f68b53c37b3ea84')
     .then(
         res=>setNews(res.data.articles)
     )

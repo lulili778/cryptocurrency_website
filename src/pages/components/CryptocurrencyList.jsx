@@ -1,50 +1,77 @@
-import React, { useContext } from "react";
+import React, {useContext, useState,useEffect} from "react";
+import { Radio, Input } from 'antd';
 
 // State
 import {
-  CryptocurrencyContext,
+  CryptoContext,
   StateContext,
   actions,
   createAction
-} from "../reducer";
+} from "../reducer_hook";
 
 export default props => {
   const state = useContext(StateContext);
-  const dispatch = useContext(CryptocurrencyContext);
+  const dispatch = useContext(CryptoContext);
 
-  const handleRemoveItem = id => {
-    dispatch(createAction(actions.REMOVE_FAVOURTIE, id));
+
+  const [cryptos,setCryptos] = useState()
+
+
+
+  const setcrypos = evt =>{
+    setCryptos(
+        evt.target.id
+   )}
+
+  const handleRemoveItem = evt => {
+    dispatch(createAction(actions.REMOVE_CRYPTO_FAV, cryptos));
   };
+
+
+
+
+  const cryptoList = (state.cryptoList)
+
+  const radioStyle = {
+    display: 'block',
+    height: '30px',
+    lineHeight: '30px',
+  };
+
 
   return (
     <div>
-      {!state.cryptocurrencyList && <p>no items in list</p>}
-      {state.cryptocurrencyList && (
-        // <table>
-        //   <thead>
-        //     <tr>
-        //       <th>ID</th>
-        //       <th>Name</th>
-        //       <th>Price</th>
-        //       <th>Actions</th>
-        //     </tr>
-        //   </thead>
-          <div>
-            {state.cryptocurrencyList &&
-              state.cryptocurrencyList.map(item => (
-                <tr key={item.id}>
-                  <td>{item.name}</td>
-                  <td>${item.price}</td>
-                  <td>
-                    <button onClick={() => handleRemoveItem(item.id)}>
-                      remove
-                    </button>
-                  </td>
-                </tr>
-              ))}
-    //       </div>
-    //     </table>
-      )}
+       <Radio.Group onChange={setcrypos}>
+                {cryptoList && cryptoList.map(item => (
+                  <div>
+                    <Radio id={item.name} style={radioStyle} value={item.price}>
+                        {item.name} ${item.price}
+                    </Radio>
+
+                  </div>
+                ))}
+                <button id="remove" onClick={handleRemoveItem}> Remove</button>
+
+      </Radio.Group>
     </div>
-  );
-};
+  )
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
