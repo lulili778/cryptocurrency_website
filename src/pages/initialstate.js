@@ -1,24 +1,28 @@
 import React, { Component, useState, useEffect } from 'react';
- 
-export default {
-    loadingCrypto : false,
-        cryptoList : [{"name":"dsdsds","price":1233}]
+import axios from 'axios'
+
+
+function getInitialData(){
+    const fav_list = localStorage.getItem('fav')
+    console.log(fav_list)
+    const fav_map = []
+    axios.get('https://min-api.cryptocompare.com/data/pricemulti?fsyms='+fav_list+'&tsyms=SGD,USD&api_key=4159168a1743c1005c8a3805c9b2cd52e2e882ce4f4bc60608b51e07d5657b58').then(res =>{
+        console.log("---data",res.data)
+        Object.keys(res.data).map(item =>(
+            fav_map.push({
+                price :res.data[item].SGD,
+                name : item})
+        ))
+    })
+    return (
+        fav_map
+    )
+
 }
 
-// export default {
-//     loadingItems: false, // our app uses this to determine if we're loading our list
-//         shoppingList: [ // our initial list of items
-//         {
-//             id: 1,
-//             name: "Bananas",
-//             description: "A bunch of 5 bananas, fresh from the plant",
-//             price: 1.83
-//         },
-//         {
-//             id: 2,
-//             name: "Soup",
-//             description: "A can of beef broth",
-//             price: 0.54
-//         }
-//         ]
-// }
+
+
+export default {
+    loadingCrypto : false,
+        cryptoList : getInitialData()
+}

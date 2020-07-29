@@ -15,9 +15,6 @@ export default props => {
 
 
   const [cryptos,setCryptos] = useState()
-
-
-
   const setcrypos = evt =>{
     setCryptos(
         evt.target.id
@@ -25,6 +22,11 @@ export default props => {
 
   const handleRemoveItem = evt => {
     dispatch(createAction(actions.REMOVE_CRYPTO_FAV, cryptos));
+    const fav = localStorage.getItem('fav').split(',')
+    fav.pop(cryptos)
+    localStorage.setItem('fav',fav.join(','))
+    console.log('FAV',fav)
+
   };
 
 
