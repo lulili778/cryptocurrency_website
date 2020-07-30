@@ -11,7 +11,8 @@ import NotFoundPage from './pages/404';
 import PricePage from './pages/prices';
 import Playground from './playground/playground';
 // import Prices_hook from './price_hook/playground';
-import Prices_hook from './pages/prices_hook'
+import Prices_hook from './pages/prices_hook';
+import All_crytocurrency from './pages/allcryptos'
 
 class App extends Component{
   render() {
@@ -23,6 +24,9 @@ class App extends Component{
         <Route exact path='/404' component={NotFoundPage} />
         <Route exact path="/playground" component={Playground} />
         <Route exact path="/pricehook" component={Prices_hook} />
+        <Route exact path="/" component={Prices_hook} />
+        <Route exact path="/All" component={All_crytocurrency} />
+
 
         <Redirect to= "/Prices"/>
       </Switch>
