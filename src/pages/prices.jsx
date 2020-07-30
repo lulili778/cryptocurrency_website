@@ -235,6 +235,7 @@ onclick=(e)=>{
                 style={{ lineHeight: '64px' }}>
                 <Menu.Item key="1"><Link to ="/News">Cryptocurrency News</Link></Menu.Item>
                 <Menu.Item key="2">Price</Menu.Item>
+                <Menu.Item key="3"><Link to ="/pricehook">Price Hook</Link></Menu.Item>
             </Menu>
         </Header>
         <Content style={{ padding: '0 50px' }}>

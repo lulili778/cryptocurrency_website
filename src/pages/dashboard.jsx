@@ -32,6 +32,8 @@ return (
                 style={{ lineHeight: '64px' }}>
                 <Menu.Item key="1">Cryptocurrency News</Menu.Item>
                 <Menu.Item key="2"><Link to ="/Prices">Price</Link></Menu.Item>
+                <Menu.Item key="3"><Link to ="/pricehook">Price Hook</Link></Menu.Item>
+
             </Menu>
         </Header>
         <Content style={{ padding: '0 50px' }}>
