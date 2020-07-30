@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import {Link} from "react-router-dom";
 import logo from '../logo.svg';
-import {Layout, Menu, Breadcrumb, Icon} from 'antd';
+import {Layout, Menu, Breadcrumb, Icon, Card, Col, Row} from 'antd';
 import {generate,presetPalettes} from '@ant-design/colors';
 import axios from 'axios'
 
@@ -11,7 +11,7 @@ const {Header, Content, Sider, Footer} = Layout;
 function DashBoard() {
     const [news, setNews] = useState('')
     useEffect(()=>{
-        axios.get('http://newsapi.org/v2/everything?q=bitcoin&from=2020-06-28&sortBy=publishedAt&apiKey=6c19551830ff42658f68b53c37b3ea84')
+        axios.get('http://newsapi.org/v2/everything?q=bitcoin&from=2020-06-30&sortBy=publishedAt&apiKey=6c19551830ff42658f68b53c37b3ea84')
     .then(
         res=>setNews(res.data.articles)
     )
@@ -39,15 +39,45 @@ return (
                  <Breadcrumb.Item>Home</Breadcrumb.Item>
                  <Breadcrumb.Item>News</Breadcrumb.Item>
              </Breadcrumb></Content>
-             <div style={{ background: '#fff', padding: 24, minHeight: 350 }}><big><span className='left'>Latest Cryptocurrency News</span></big><br/>
-             <div>{Object.keys(news).map((key)=>(
+             <div style={{padding: 24, minHeight: 350}}><big><span className='left'>Latest Cryptocurrency News</span></big><br/>
+            <br />
+                         {/* <div>{Object.keys(news).map((key)=>(
                     <div id="news-container">
                         <span className='right'><img src={news[key].urlToImage} height='80px' width='80px' ></img></span>
                         <span className='left'>{news[key].title}</span>
                         <br/>
                         {news[key].description} 
                     </div>
-                ))}</div>
+                ))}</div> */}
+            <div>
+                {Object.keys(news).map((key)=>(
+            <div className="site-card-wrapper">
+            <br/>
+            <Row gutter={24}>
+            <Col span={24}>
+              <Card title={news[key].title} bordered={false}>
+                  <p1> {news[key].description} </p1>
+                  <p1><span className='right'><img src={news[key].urlToImage} height='80px' width='80px' ></img></span></p1>
+              </Card>
+            </Col>
+            {/* <Col span={8}>
+              <Card title={news[key].title} bordered={false}>
+              <p1> {news[key].description} </p1>
+              <p1><span className='right'><img src={news[key].urlToImage} height='80px' width='80px' ></img></span></p1>
+              </Card>
+            </Col>
+            <Col span={8}>
+              <Card title={news[key].title} bordered={false}>
+              <p1> {news[key].description} </p1>
+              <p1><span className='right'><img src={news[key].urlToImage} height='80px' width='80px' ></img></span></p1>
+              </Card>
+            </Col> */}
+            <br/>
+            </Row>
+          </div>
+                              
+            ))}
+        </div>
             </div>
             <br />
         <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>

@@ -60,7 +60,7 @@ export default props =>{
         )
     },[''])
 
-    // console.log("DATAS",datas.plot) 
+    console.log("DATAS",datas.plot) 
 
 
     const getChartData = () =>{
