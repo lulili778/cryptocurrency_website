@@ -28,7 +28,7 @@ class App extends Component{
         <Route exact path="/All" component={All_crytocurrency} />
 
 
-        <Redirect to= "/Prices"/>
+        <Redirect to= "/pricehook"/>
       </Switch>
     </Router>
     )

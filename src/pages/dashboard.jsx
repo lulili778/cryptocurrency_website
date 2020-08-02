@@ -11,7 +11,7 @@ const {Header, Content, Sider, Footer} = Layout;
 function DashBoard() {
     const [news, setNews] = useState('')
     useEffect(()=>{
-        axios.get('http://newsapi.org/v2/everything?q=bitcoin&from=2020-06-30&sortBy=publishedAt&apiKey=6c19551830ff42658f68b53c37b3ea84')
+        axios.get('http://newsapi.org/v2/everything?q=bitcoin&from=2020-08-02&sortBy=publishedAt&apiKey=6c19551830ff42658f68b53c37b3ea84')
     .then(
         res=>setNews(res.data.articles)
     )
@@ -59,6 +59,7 @@ return (
             <Col span={24}>
               <Card title={news[key].title} bordered={false}>
                   <p1> {news[key].description} </p1>
+                  <div>{news[key].urlToImage}</div>
                   <p1><span className='right'><img src={news[key].urlToImage} height='80px' width='80px' ></img></span></p1>
               </Card>
             </Col>
