@@ -1,5 +1,5 @@
 import React, {useContext, useState,useEffect} from "react";
-import {Layout, Menu, Breadcrumb, Icon, Card,Col, Row,Table, Radio, Divider } from 'antd';
+import {Layout, Menu, Breadcrumb, Icon, Card,Col, Row,Table, Radio, Divider,Button } from 'antd';
 import {Link} from "react-router-dom";
 import axios from 'axios'
 
@@ -10,7 +10,12 @@ import axios from 'axios'
 
 export default props => {
 
+    const data = [
 
+
+
+
+    ] 
 
     const columns = [
         // {
@@ -26,6 +31,9 @@ export default props => {
         {
           title: 'Currency',
           dataIndex: 'SGD',
+          sorter:{
+            compare : (a, b ) => a.SGD - b.SGD
+          },
         },
         {
             title: 'Change 24Hr',
@@ -38,10 +46,9 @@ export default props => {
           console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         }
       };
+
     
-    
-      const [selectionType, setSelectionType] = useState('checkbox');
-    
+      
     
 
     const [cryptos,setCryptos] = useState([{
@@ -58,6 +65,8 @@ export default props => {
                 // name : Object.keys(res.data.RAW).map(key =>({key})),
                 cryptosObject : Object.keys(res.data.RAW).map(key =>(
                         {
+                          //key is compulsory for table
+                            // key : key,
                             name : key , 
                             SGD : res.data.RAW[key].SGD.PRICE,
                             USD : res.data.RAW[key].USD.PRICE,
@@ -65,10 +74,6 @@ export default props => {
                             ICON : res.data.RAW[key].SGD.IMAGEURL,
                             CHANGE_24 : res.data.RAW[key].SGD.CHANGEPCT24HOUR,
                         }
-                    
-                    
-                    
-                    
                     ))
                 
         }),
@@ -79,29 +84,22 @@ export default props => {
 
     
 
-
+    function onChange(pagination, filters, sorter, extra){
+      console.log("sorter",pagination, filters, sorter, extra)
+    }
 
     return (
-        <div>
-          {/* <Radio.Group
-            onChange={({ target: { value } }) => {
-              setSelectionType(value);
-            }}
-            value={selectionType}
-          >
-          </Radio.Group> */}
-    
-          <Divider />
-    
+        <div>    
           <Table
-            rowSelection={{
-              type: selectionType,
-              ...rowSelection,
-            }}
+            rowSelection={
+              rowSelection
+            }
+            rowKey={'name'}
             columns={columns}
             dataSource={cryptos.cryptosObject}
+            onChange={onChange}
           />
-          <button>Hi</button>
+          <Button type='primary'>Compare</Button>
         </div>
       );
     };
