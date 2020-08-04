@@ -31,13 +31,13 @@ export default props => {
         {
           title: 'Currency',
           dataIndex: 'SGD',
-          sorter:{
-            compare : (a, b ) => a.SGD - b.SGD
-          },
+          sorter: (a, b ) => a.SGD - b.SGD
+          ,
         },
         {
             title: 'Change 24Hr',
             dataIndex: 'CHANGE_24',
+            sorter: (a,b) => a.CHANGE_24 - b.CHANGE_24
           },
       ];
     
