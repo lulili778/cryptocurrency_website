@@ -1,21 +1,58 @@
 import React, {useContext, useState,useEffect} from "react";
-import {Layout, Menu, Breadcrumb, Icon, Card,Col, Row,Table, Radio, Divider,Button } from 'antd';
+import {AutoComplete, Layout, Menu, Breadcrumb, Icon, Card,Col, Row,Table, Radio, Divider,Button, Input,icons } from 'antd';
 import {Link} from "react-router-dom";
 import axios from 'axios'
 
-
+const {Search} = Input;
 
 
 
 
 export default props => {
 
-    const data = [
+function getRandomInt(max, min=0){
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+} 
+
+const searchResult = query =>
+  new Array(getRandomInt(5))
+  .join('.')
+  .split('.')
+  .map((item, idx) =>{
+  const category = `${query}${idx}`;
+  return {
+    value : category,
+    label :(
+      <div style={{
+        display:'flex',
+        justifyContent:'space-between',
+      }}>
+        <span>
+          Found {query} on{' '}
+          <a
+                href={`https://s.taobao.com/search?q=${query}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {category}
+              </a>
+            </span>
+            <span>{getRandomInt(200, 100)} results</span>
+          </div>
+        ),
+      };
+    })
 
 
+    const [options, setOptions] = useState([]);
+    const handleSearch = value =>{
+      setOptions(value ? searchResult(value) : []);
+    }
+    const onSelect = value =>{
+      console.log('onSelect',value);
+    }
 
-
-    ] 
+  
 
     const columns = [
         // {
@@ -26,7 +63,8 @@ export default props => {
         {
           title: 'Name',
           dataIndex: 'name',
-        render: text => <a>{text}</a>
+        render: text => <a>{text}</a>,
+
         },
         {
           title: 'Currency',
@@ -89,7 +127,22 @@ export default props => {
     }
 
     return (
-        <div>    
+        <div>
+          {/* <Search maxLength={10} placeholder="Search by Cryptocurrency Name" onSearch={value=>console.log(value)} enterButton /> */}
+          <AutoComplete dropdownMatchSelectWidth={252}
+          style={{
+            width : 300,
+          }}
+          options={options}
+          onSelect={onSelect}
+          onSearch={handleSearch}
+          >
+            <Input.Search size="large" placeholder="input here" enterButton />
+
+
+          </AutoComplete>
+          <br /> 
+          <Card bordered={false}>
           <Table
             rowSelection={
               rowSelection
@@ -99,6 +152,7 @@ export default props => {
             dataSource={cryptos.cryptosObject}
             onChange={onChange}
           />
+          </Card>
           <Button type='primary'>Compare</Button>
         </div>
       );

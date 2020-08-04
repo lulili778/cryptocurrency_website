@@ -20,7 +20,7 @@ class App extends Component{
     <Router>
       <Switch>
         <Route exact path="/News" component={DashBoard} />   
-        <Route exact path="/Prices" component={PricePage} />
+        <Route exact path="/Prices" component={Prices_hook} />
         <Route exact path='/404' component={NotFoundPage} />
         <Route exact path="/playground" component={Playground} />
         <Route exact path="/pricehook" component={Prices_hook} />
