@@ -2,7 +2,7 @@ import React, {useContext, useState,useEffect} from "react";
 import {AutoComplete, Layout, Menu, Breadcrumb, Icon, Card,Col, Row,Table, Radio, Divider,Button, Input,icons } from 'antd';
 import {Link} from "react-router-dom";
 import axios from 'axios'
-
+import {SelectCryptoContext, actions, createAction} from "../allCryptocurrency_hook"
 const {Search} = Input;
 
 
@@ -79,13 +79,41 @@ const searchResult = query =>
           },
       ];
     
+      const dispatch = useContext(SelectCryptoContext);
+      const [selectCryptos, setSelectCryptos] = useState()
+
+      
+
+      const handleSelectCrypto =()=> {
+        dispatch(createAction(actions.SELECTED_CRYPTO,selectCryptos))
+        console.log("---1 Selected",selectCryptos)
+      }
+
+
       const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
+          setSelectCryptos([selectedRowKeys]);
           console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         }
       };
 
     
+      function disableBtn (){
+        try{
+          if (selectCryptos.length ===0){
+            return (true)
+          }
+          else{
+            return (false)
+          }
+        }
+        //Need to think of a way to better handle this
+        catch (err){
+          console.log("exception",err)
+          return (true)
+
+        }
+      }
       
     
 
@@ -153,7 +181,7 @@ const searchResult = query =>
             onChange={onChange}
           />
           </Card>
-          <Button type='primary'>Compare</Button>
+          <Button href="/compare" disabled={disableBtn()} onClick={handleSelectCrypto} type='primary'>Compare</Button>
         </div>
       );
     };

@@ -17,6 +17,7 @@ export const createAction = (type,payload) =>{
 
 
 export const reducer = (state,action) =>{
+    console.log("----STATE.selectCryptoList",state.selectCryptoList)
     switch (action.type) {
         case actions.SELECTED_CRYPTO:
             const selectCrypto = {
@@ -26,7 +27,7 @@ export const reducer = (state,action) =>{
 
             return {
                 ...state,
-                selectCryptoList : [...state.selectCryptoList, selectCrypto]
+                selectCryptoList : [selectCrypto,...state.selectCryptoList]
             };
         case actions.UNSELECTED_CRYPTO:
             return {

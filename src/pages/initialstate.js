@@ -30,5 +30,6 @@ function getInitialData(){
 
 export default {
     loadingCrypto : false,
-        cryptoList : getInitialData()
+        cryptoList : getInitialData(),
+        selectCryptoList : []
 }

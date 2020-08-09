@@ -13,6 +13,7 @@ import Playground from './playground/playground';
 // import Prices_hook from './price_hook/playground';
 import Prices_hook from './pages/prices_hook';
 import All_crytocurrency from './pages/allcryptos'
+import Compare from './pages/compare'
 
 class App extends Component{
   render() {
@@ -26,6 +27,7 @@ class App extends Component{
         <Route exact path="/pricehook" component={Prices_hook} />
         <Route exact path="/" component={Prices_hook} />
         <Route exact path="/All" component={All_crytocurrency} />
+        <Route exact path="/compare" component={Compare} />
 
 
         <Redirect to= "/pricehook"/>
