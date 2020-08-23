@@ -20,14 +20,14 @@ import { reducer, StateContext, SelectCryptoContext, actions } from "./allCrypto
 
 export default props =>{
 
-    const [state, dispatch] = useReducer(reducer, initialState);
+    // const [state, dispatch] = useReducer(reducer, initialState);
 
 
 
 
 
     return (
-        <SelectCryptoContext.Provider value={dispatch}>
+        <SelectCryptoContext.Provider >
         <div>
     <AllCryptocurrency/>
         </div>

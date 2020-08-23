@@ -26,6 +26,7 @@ export default props =>{
     console.log(state)
 
 
+    
     return (
         <SelectCryptoContext.Provider value={selectCryptos}>
         <div>

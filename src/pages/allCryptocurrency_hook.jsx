@@ -1,6 +1,8 @@
 import React from "react";
 export const StateContext = React.createContext(null);
-export const SelectCryptoContext = React.createContext(null);
+export const SelectCryptoContext = React.createContext({
+    selectCryptos : []
+});
 
 
 export const actions = {
