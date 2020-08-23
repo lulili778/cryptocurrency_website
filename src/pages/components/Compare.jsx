@@ -10,12 +10,17 @@ export default props => {
     const state = useContext(StateContext);
     const dispatch = useContext(SelectCryptoContext);
 
-    // const [state, dispatch] = useReducer(reducer, initialState);
+    
+
+
+
+
+
 
     console.log("TEST",dispatch)
     return (
         <div>
-        <div>heeellllooooooo</div>
+        <div>{dispatch}</div>
         <Row gutter={24}>
             <Col span={12}>
         <Card>

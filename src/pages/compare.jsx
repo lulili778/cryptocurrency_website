@@ -22,11 +22,12 @@ export default props =>{
     const state = useContext(StateContext);
     const dispatch = useContext(SelectCryptoContext);
 
-
+    const selectCryptos = ["BTC","ETH"] 
+    console.log(state)
 
 
     return (
-        <SelectCryptoContext.Provider value={dispatch}>
+        <SelectCryptoContext.Provider value={selectCryptos}>
         <div>
             {/* {props.selectCryptoList} */}
             <Compare/>

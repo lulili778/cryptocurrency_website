@@ -1,9 +1,10 @@
-import React, {useContext, useState,useEffect} from "react";
+import React, {useContext, useState,useEffect,createContext} from "react";
 import {AutoComplete, Layout, Menu, Breadcrumb, Icon, Card,Col, Row,Table, Radio, Divider,Button, Input,icons } from 'antd';
 import {Link} from "react-router-dom";
 import axios from 'axios'
 import {SelectCryptoContext, actions, createAction} from "../allCryptocurrency_hook"
 const {Search} = Input;
+
 
 
 
@@ -89,10 +90,10 @@ const searchResult = query =>
         console.log("---1 Selected",selectCryptos)
       }
 
-
       const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
           setSelectCryptos([selectedRowKeys]);
+        
           console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         }
       };
@@ -156,6 +157,8 @@ const searchResult = query =>
 
     return (
         <div>
+          <p>{selectCryptos}</p>
+          <SelectCryptoContext.Provider value={selectCryptos}/>
           {/* <Search maxLength={10} placeholder="Search by Cryptocurrency Name" onSearch={value=>console.log(value)} enterButton /> */}
           <AutoComplete dropdownMatchSelectWidth={252}
           style={{
